@@ -1,0 +1,65 @@
+<div class="row">
+  <%= render 'site/sidebar' -%> 
+ 
+  <div class="col-sm-9 page-content">
+      <%= render 'site/topbar' -%>
+
+
+    <div class="inner-box">
+    <h2 class="title-2"><i class="icon-docs"></i> Anúncios Salvos </h2>
+    <div class="table-responsive">
+      <table id="addManageTable" class="table table-striped table-bordered add-manage-table table demo">
+        <thead>
+          <tr>
+            <th> Capa</th>
+            <th data-sort-ignore="true"> Detalhes</th>
+            <th data-type="numeric"> Preço</th>
+            <th> Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @savedads.each do |ad| -%>
+        <!-- interar -->
+          <tr>
+            <td style="width:14%" class="add-img-td">
+              <% if ad.images.blank? -%>
+                <%= image_tag "http://placehold.it/600x500", :class => 'thumbnail img-responsive' -%>
+                            <% else -%>
+                              <%= image_tag ad.images[0], :class => 'thumbnail img-responsive' -%>
+                            <% end -%>
+            </td>
+            
+            <td style="width:50%" class="ads-details-td">
+              <div>
+              <p><strong><%= link_to ad.title, ver_anuncio_path(ad), :target => '_Blank' %> </strong></p>
+              <p><strong> Categoria</strong>: <%= ad.category.description -%> </p>
+              <p><strong>Criado em</strong>: <%= ad.created_at.to_s(:created_at) -%>   -   <strong>Visitas:</strong> 223</p>
+              </div>
+            </td>
+
+            <td style="width:15%" class="price-td">
+            <% if ad.price == 0 -%>
+              <div><strong>Combinar</strong></div>
+            <% else -%>
+              <div><strong> <%= number_to_currency(ad.price, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></strong></div>
+            <% end -%>
+            </td>
+
+            <td style="width:6%" class="action-td">
+              <div>
+                <p><%= link_to '<i class="fa fa-heart"></i> <span>Remover</span>'.html_safe, favorite_ad_path(ad), method: :delete, :class => "btn btn-danger  btn-sm make-favorite" %></p>
+              </div>
+            </td>
+          </tr>
+          <!-- interar -->
+          <% end -%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div> 
+</div>
+
+
+    

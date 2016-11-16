@@ -1,0 +1,69 @@
+
+<% subscription = Iugu::Subscription.fetch(current_user.subscription.subscription_id) -%>
+
+
+<div class="col-lg-12">
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th> Data</th>
+					<th>Descrição</th>
+					<th> Status</th>
+					<th> Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% subscription.recent_invoices.each do |invoice| -%>
+			<% status = invoice["status"]
+	if status == "paid"
+		statusn = "Pago"
+	else
+		statusn = "Pendente"
+	end 
+
+
+	-%>
+				<tr>
+					<td><%= invoice["due_date"] -%></td>
+					<td>Assinatura Mensal: <%= subscription.plan_ref -%></td>
+					<td><span class="label label-success"><%= statusn -%></span>
+					<td><%= invoice["total"] -%></td>
+					</td>
+				</tr>
+			<% end -%>
+			</tbody>
+		</table>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="welcome-msg" style="margin-left: 20px;">
+	<h3 class="page-sub-header2 clearfix no-padding">Histórico</h3>
+</div>
+
+<div class="col-lg-12">
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Descrição</th>
+					<th> Notas</th>
+					<th> Data</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% subscription.logs.each do |invoice| -%>
+			<% date = DateTime.parse(invoice["created_at"]) -%>
+				<tr>
+					<td><b><%= invoice["description"] -%></b></td>
+					<td><%= invoice["notes"] -%></td>
+					<td><%= date.strftime('%H:%M:%S %d/%m/%Y') -%></td>
+				</tr>
+			<% end -%>
+			</tbody>
+		</table>
+	</div>
+</div>

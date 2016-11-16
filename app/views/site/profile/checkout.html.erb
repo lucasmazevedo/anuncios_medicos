@@ -1,0 +1,85 @@
+<div class="row">
+  <%= render 'site/sidebar' -%> 
+ 
+  <div class="col-sm-9 page-content">
+    
+      <%= render 'site/topbar' -%>
+    
+
+    <div class="inner-box">
+      <div class="welcome-msg">
+        <h3 class="page-sub-header2 clearfix no-padding">Pagamento (Plano: <%= @plan.name-%>)</h3>
+        <hr>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+
+            <div class="col-sm-6">
+             <h3 style="margin-left: 0px;"> <i class="fa fa-list"></i>   Resumo do Pagamento</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th class="tar">Valor</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr>
+                            <td>Assinatura: <%= @plan.name -%></td>
+                            <td class="tar"> <%= number_to_currency(@plan.amount, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></td>
+                        </tr>
+                        <tr class="order-total">
+                            <td>TOTAL</td>
+                            <td class="tar"><%= number_to_currency(@plan.amount, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-sm-6 credit-card-payment">
+            <h3 style="margin-left: 20px;"> <i class="fa fa-credit-card"></i>   Dados Cartão de Credito</h3>
+                <form id="payment-form" action="/painel/checkout/pay" method="POST">
+                <input name="utf8" type="hidden" value="&#x2713;" />
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                    <input type="hidden" name="plan" value="<%= @plan.identifier -%>">
+                    <div class="usable-creditcard-form">
+                        <div class="wrapper">
+                            <div class="input-group nmb_a">
+                                <div class="icon ccic-brand"></div>
+                                <input autocomplete="off" class="credit_card_number" data-iugu="number" placeholder="Número do Cartão" type="text" value="" />
+                            </div>
+                            <div class="input-group nmb_b">
+                                <div class="icon ccic-cvv"></div>
+                                <input autocomplete="off" class="credit_card_cvv" data-iugu="verification_value" placeholder="CVV" type="text" value="" />
+                            </div>
+                            <div class="input-group nmb_c">
+                                <div class="icon ccic-name"></div>
+                                <input class="credit_card_name" data-iugu="full_name" placeholder="Titular do Cartão" type="text" value="" />
+                            </div>
+                            <div class="input-group nmb_d">
+                                <div class="icon ccic-exp"></div>
+                                <input autocomplete="off" class="credit_card_expiration" data-iugu="expiration" placeholder="MM/AA" type="text" value="" />
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <a class="iugu-btn pull-right" href="http://iugu.com" tabindex="-1">
+                <img src="http://storage.pupui.com.br/9CA0F40E971643D1B7C8DE46BBC18396/assets/payments-by-iugu.1df7caaf6958f1b5774579fa807b5e7f.png" alt="Pagamentos por Iugu" border="0" />
+              </a>
+                        </div>
+                    </div>
+                    <input type="hidden" name="token" id="token" value="" readonly="true" size="64" style="text-align:center" />
+                    <div class="submit-div">
+                        <button type="submit" class="btn btn-primary">Pagar</button>
+                    </div>
+                </form>
+            </div>
+          
+        </div>
+          </div>
+      </div>
+    
+ 
+  </div>
+</div> 
+</div>

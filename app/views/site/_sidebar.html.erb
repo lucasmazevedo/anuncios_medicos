@@ -1,0 +1,61 @@
+<div class="col-sm-3 page-sidebar">
+  <% if current_page?(new_site_ad_path) %>
+  <div class="panel sidebar-panel">
+    <div class="panel-heading uppercase"><small><strong>Regras para Postar</strong></small></div>
+      <div class="panel-content">
+        <div class="panel-body text-left">
+          <ul class="list-check">
+            <li> <i class="fa fa-check"></i> Certifique-se de que seu anúncio está categoria correta</li>
+            <li> <i class="fa fa-check"></i> Não publicar o mesmo anúncio mais de uma vez ou republicar um mesmo anúncio dentro de 48 horas.</li>
+            <li> <i class="fa fa-check"></i> Não faça upload de fotos com marcas d'água.</li>
+            <li> <i class="fa fa-check"></i> Não postar anúncios contendo vários itens a menos que seja um pacote.</li>
+            <li> <i class="fa fa-check"></i> Não coloque seu e-mail ou números de telefone no título ou descrição.</li>            
+          </ul>
+        </div>
+      </div>
+  </div>
+  <% end -%>
+  <aside>
+    <div class="inner-box">
+      <div class="user-panel-sidebar">
+        <div class="collapse-box">
+          <h5 class="collapse-title no-border"> Minha Conta <a href="#MyClassified" data-toggle="collapse" class="pull-right"><i class="fa fa-angle-down"></i></a></h5>
+          <div class="panel-collapse collapse in" id="MyClassified">
+            <ul class="acc-list">
+              <li><%= link_to '<i class="fa fa-user"></i> Principal'.html_safe, perfil_path -%></li>
+              <li><%= link_to '<i class="fa fa-user"></i> Meu Perfil'.html_safe, edit_user_registration_path -%></li>
+              <!-- <li><%= link_to '<i class="fa fa-credit-card"></i> Pagamentos'.html_safe, root_path -%></li> -->
+              <li><%= link_to '<i class="fa fa-times-circle"></i> Deletar Conta'.html_safe, encerrar_path -%></li>
+            </ul>
+          </div>
+        </div>
+ 
+        <div class="collapse-box">
+          <h5 class="collapse-title"> Anúncios <a href="#MyAds" data-toggle="collapse" class="pull-right"><i class="fa fa-angle-down"></i></a></h5>
+          <div class="panel-collapse collapse in" id="MyAds">
+            <ul class="acc-list">
+              
+            <li><%= menu_item(new_site_ad_path) do  -%>
+              <i class="fa fa-times-circle"></i> Novo Anúncio
+            <%  end -%></li>
+
+            <li><%= link_to(site_ads_path) do  -%>
+              <i class="fa fa-times-circle"></i> Meus Anúncios <span class="badge"><%= current_user.ads.where(status: true).count -%></span>
+            <%  end -%></li>
+
+       <!--      <li><%= link_to(pendentes_site_ads_path) do  -%>
+              <i class="fa fa-times-circle"></i> Anúncios Pendentes <span class="badge"><%= current_user.ads.where(status: false).count -%></span>
+            <%  end -%> </li> -->
+
+            <li><%= link_to(salvos_site_ads_path) do  -%>
+              <i class="fa fa-times-circle"></i> Anúncios Salvos <span class="badge"><%= current_user.favorites.count -%></span>
+            <%  end -%></li>
+            </ul>
+          </div>
+        </div>
+ 
+        
+      </div>
+    </div>
+  </aside>
+</div>

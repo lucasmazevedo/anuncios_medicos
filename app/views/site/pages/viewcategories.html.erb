@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-sm-3 page-sidebar mobile-filter-sidebar">
+	<aside>
+		<div class="inner-box">
+			<div class="categories-list  list-filter">
+			<h5 class="list-title"><strong><%= link_to "Todas as Categorias", ver_categorias_path %></strong></h5>
+				<ul class=" list-unstyled">
+				<% @categories.each do |category| -%>
+					<%= menu_item "<span class='title'>#{category.description}</span><span class='count'>&nbsp;(#{category.ads.count})</span>".html_safe, ver_categorias_path(category) %>
+				<% end -%>
+				</ul>
+			</div>
+ 			<div style="clear:both"></div>
+		</div>
+		</aside>
+	</div>
+ 
+ <div class="col-lg-9 content-box ">
+	<div class="row row-featured row-featured-category">
+            <div class="col-lg-12  box-title no-border"> 
+                <div class="inner"><h2><span>Você está em </span><%= @category.present? ? @category.description : "Todas as Categorias" %> <a href="" class="sell-your-item"> Ver Mais + <i class="fa fa-th-list" aria-hidden="true"></i> </a></h2>
+                </div>
+            </div>
+    
+            <div class="adds-wrapper">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="allAds">
+                        <!-- item -->
+                     <% @ads.each do |ad|-%>
+                    	<div class="item-list">
+							<!-- <div class="cornerRibbons topAds">
+								<a href="#"> Top Ads</a>
+							</div> -->
+							<div class="col-sm-2 no-padding photobox">
+								<div class="add-image">
+									<% if ad.images.blank? -%>
+		                            	<%= link_to image_tag("http://placehold.it/600x500", :class => 'thumbnail no-margin'), ver_anuncio_path(ad) %>
+		                           	<% else -%>
+		                            	<span class="photo-count"><i class="fa fa-camera"></i> <%= ad.images.count -%> </span>
+		                                <%= link_to image_tag(ad.images[0].thumb, :class => 'thumbnail no-margin'), ver_anuncio_path(ad) %>
+		                            <% end -%>
+								</div>
+
+
+							</div>
+							 
+							<div class="col-sm-7 add-desc-box">
+								<div class="add-details">
+									<h5 class="add-title"><%= link_to ad.title, ver_anuncio_path(ad) %></h5>
+									<span class="info-row"> 
+                                        <span class="date"><i class="fa fa-clock-o"> </i> <%= I18n.l(ad.created_at, format: :short) -%> </span> <br> 
+                                        <span class="category"><i class="fa fa-tags"> </i> <%= ad.category.description -%> </span><br> 
+                                        <span class="item-location"><i class="fa fa-map-marker"></i> <%= "#{ad.user.profile.city} / #{ad.user.profile.state}" -%> </span>
+                                    </span>
+								</div>
+							</div>
+							 
+							<div class="col-sm-3 text-right  price-box">
+								<% if ad.price == 0 -%>
+                                <h2 class="item-price"> Valor a combinar </h2>
+                            <% else -%>        
+                                <h2 class="item-price"> <%= number_to_currency(ad.price, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %> </h2>
+                            <% end -%>
+								<% if user_signed_in? -%>
+                                <%- unless current_user.favorite_ads.exists?(id: ad.id) -%>
+                                    <%= link_to '<i class="fa fa-heart"></i> <span>Favoritar</span>'.html_safe, favorite_ads_path(ad_id: ad), method: :post, :class => "btn btn-primary  btn-sm make-favorite" %>
+                                <%- else -%>
+                                    <%= link_to '<i class="fa fa-heart"></i> <span>Remover</span>'.html_safe, favorite_ad_path(ad), method: :delete, :class => "btn btn-danger  btn-sm make-favorite" %>
+                                <%- end -%>
+                                <% else -%>
+                                <%= link_to '<i class="fa fa-heart"></i> <span>Favoritar</span>'.html_safe, favorite_ads_path(ad_id: ad), method: :post, :class => "btn btn-default  btn-sm make-favorite" %>
+                            <%- end -%>
+							</div>
+						</div>
+						<% end -%>
+                        <!-- fim item -->
+
+
+                        
+                     </div>
+                </div>
+            </div> 
+        </div>
+        </div>
+
+<div class="pagination-bar text-center">
+<%= paginate @ads %>
+</div>
+ 
+<div class="post-promo text-center">
+            <h2> Tem algo pra vender ? </h2>
+            <h5>Venda seus produtos online gratuitamente. É mais fácil do que você pensa!</h5>
+            <%= link_to "Cadastre-se", new_user_registration_path, :class => 'btn btn-lg btn-border btn-post btn-danger' %>
+        </div>
+ 
+</div>
+ 

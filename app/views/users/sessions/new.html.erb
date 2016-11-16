@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="col-sm-5 login-box">
+		<div class="panel panel-default">
+			<div class="panel-intro text-center">
+				<h2 class="logo-title">Entrar na Conta</h2>
+			</div>
+		
+		<div class="panel-body">
+			<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+			<%= f.input :email, required: false, autofocus: true %>
+			<%= f.input :password, required: false %>
+   		<%= f.button :submit, "Entrar", :class => 'btn-block btn-primary' %>
+		</div>
+	
+	<div class="panel-footer">
+		<div class="pull-left">
+    	<%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+		</div>
+
+		<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+			<p class="text-center pull-right">
+	  		<%= link_to "Esqueceu sua senha?", new_password_path(resource_name) %>
+	  	</p>
+		<% end -%>
+		<div style=" clear:both"></div>
+	</div>
+</div>
+<% end %>
+
+	<div class="login-box-btm text-center">
+		<p> Não tem uma conta? <br>
+		<%= render "users/shared/links" %>
+	</div>
+
+</div>
+</div>
+
+
+

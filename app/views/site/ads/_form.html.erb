@@ -1,0 +1,80 @@
+<%= simple_form_for([:site, @ad], :html => { :class => 'form-horizontal' } ) do |f| %>
+  
+  <%= f.error_notification %>
+<%= f.error :limit -%>
+
+         <fieldset>
+ 
+          <div class="form-group">
+            <label class="col-md-3 control-label">Categoria</label>
+            <div class="col-md-8">
+              <%= f.association :category, label: false, prompt: 'Selecione a categoria' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="Adtitle">Titulo</label>
+            <div class="col-md-8">
+              <%= f.input :title, label: false %>
+              <!-- <span class="help-block">A great title needs at least 60 characters. </span> -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="textarea">Descrição</label>
+              <div class="col-md-8">
+                <%= f.input :description, label: false, :input_html => { :rows => 10}  %>
+              </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Estado</label>
+            <div class="col-md-8">
+              <%= f.input :state, label:false, as: :radio_buttons, collection: Ad::STATE %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="Price">Preço</label>
+            <div class="col-md-4">
+              <div class="input-group"><span class="input-group-addon">R$</span>
+              <%= f.input :price, wrapper: false, label: false, :input_html => { :type => 'text'} %>                
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="Adtitle">Tags</label>
+            <div class="col-md-8">
+              <%= f.input :tags, label: false %>
+              <span class="help-block">O campo de palavras-chave é usado para melhorar os resultados de busca.</span>
+            </div>
+          </div>
+
+          <div class="content-subheading"><i class="fa fa-tags"></i> <strong>Fotos do Anúncio (5 Fotos por anúncio)</strong></div>
+
+
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.file_field :images, label: false, multiple: true, :accept => "image/*", :id => 'filer_input' %>
+          </div>
+        </div>
+
+ 
+  <div class="form-group">
+    <label class="col-md-3 control-label">Termos</label>
+    <div class="col-md-8"><label class="checkbox-inline" for="checkboxes-0">
+      <input name="checkboxes" id="checkboxes-0" value="Remember above contact information." type="checkbox">Aceito as regras e termos do anúncios médicos. </label>
+    </div>
+  </div>
+ 
+  <div class="form-group">
+   <label class="col-md-3 control-label"></label>
+    <div class="col-md-8"><%= f.button :submit, "Cadastrar", :class => "btn btn-success btn-lg"%></div>
+  </div>
+</fieldset>
+<% end %>

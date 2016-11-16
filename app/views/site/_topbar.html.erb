@@ -1,0 +1,75 @@
+          <div class="inner-box ">
+<div class="row">
+        <div class="col-md-5 col-xs-4 col-xxs-12">
+        <% if current_user.profile.avatar.blank? -%>
+        <h3 class="no-padding text-center-480 useradmin"><img src="http://placehold.it/300x300" class="userImg"/>
+        <% else -%>
+          <h3 class="no-padding text-center-480 useradmin"><%= image_tag current_user.profile.avatar, :class => 'userImg' -%>
+        <% end -%>
+          Olá, <%=  current_user.profile.fullname.split(' ')[0] -%> </h3>
+        </div>
+        
+<div class="col-md-7 col-xs-8 col-xxs-12">
+          <div class="header-data text-center-xs">
+            
+            <!-- <div class="hdata">
+              <div class="mcol-left"><i class="fa fa-eye ln-shadow"></i></div>
+              <div class="mcol-right"><p><a href="#">7000</a> <em>visits</em></p></div>
+              <div class="clearfix"></div>
+            </div> -->
+ 
+            <div class="hdata">
+              <div class="mcol-left"><i class="fa fa-thumbs-up ln-shadow"></i></div>
+              <div class="mcol-right"><p><a href="#"><%= current_user.ads.count -%></a><em>Anúncios</em></p></div>
+              <div class="clearfix"></div>
+            </div>
+ 
+            <div class="hdata">
+              <div class="mcol-left"><i class="fa fa-user ln-shadow"></i></div>
+              <div class="mcol-right"><p><a href="#"><%= current_user.favorites.count -%></a> <em>Favorites </em></p></div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+
+          <div class="inner-box ">
+<div class="row">
+<div class="col-sm-4">
+<div class="seller-info seller-profile">
+<div class="text-muted">Plano Atual:</div>
+<h3 class="no-margin no-padding link-color uppercase "> <%= current_user.plan.name -%></h3>
+<div class="user-ads-action">
+<% if current_user.free? -%>
+<!-- <a class="btn btn-sm  btn-success "><i class=" fa fa-plus"></i> Assinar um Plano </a> -->
+<!-- <a class="btn btn-sm  btn-default "><i class=" fa fa-plus"></i> Ver Faturas </a> -->
+<% else -%>
+<%= link_to "<i class=\" fa fa-plus\"></i> Mudar Plano".html_safe, change_plan_path, :class => 'btn btn-sm btn-success' %>
+<% end -%>
+</div>
+</div>
+</div>
+<div class="col-sm-4">
+<div class="seller-contact-info">
+<h3 class="no-margin uppercase color-danger"> Você pode: </h3>
+<dl class="dl-horizontal">
+<dt>Publicar <%= current_user.plan.ads_qtd -%> Anúncio(s)</dt>
+<dt>Destacar <%= current_user.plan.feature_qtd -%> Anúncio(s)</dt>
+</dl>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="seller-contact-info">
+<h3 class="no-margin uppercase color-danger"> Você Tem: </h3>
+<dl class="dl-horizontal">
+<dt><%= current_user.status_count -%> Anúncio(s) Ativo(s)</dt>
+<dt><%= current_user.feature_count -%> Anúncio(s) Destacado(s)</dt>
+</dl>
+</div>
+</div>
+</div>
+</div>

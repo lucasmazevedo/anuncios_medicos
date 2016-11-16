@@ -1,0 +1,15 @@
+<div class="row">
+  <%= render 'site/sidebar' -%> 
+ 
+  <div class="col-sm-9 page-content">
+    <div class="inner-box">
+      <%= render 'site/topbar' -%>
+    </div>
+
+  	<div class="inner-box">
+		<h2 class="title-2"><i class="icon-cancel-circled "></i> Encerrar Conta </h2>
+		<p>Você deseja encerrar a sua conta?</p>
+		 <%= link_to "Encerrar Conta", registration_path(current_user), :class => 'btn btn-primary', data: { confirm: "Deseja Encerrar sua Conta?" }, method: :delete %>
+</div>
+</div> 
+</div>

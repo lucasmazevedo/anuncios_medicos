@@ -1,0 +1,154 @@
+<div class="row">
+  <%= render 'site/sidebar' -%> 
+ 
+  <div class="col-sm-9 page-content">
+    <div class="inner-box">
+      <%= render 'site/topbar' -%>
+    </div>
+
+    <div class="inner-box">      
+    <div id="accordion" class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a href="#collapseB1" data-toggle="collapse"> Meus Dados </a></h4>
+        </div>
+      
+      <div class="panel-collapse collapse in" id="collapseB1">
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= f.error_notification %>
+
+            <%= f.fields_for :profile do |p| %>
+            <div class="form-group required">
+              <label class="col-md-3 control-label">Nome Completo <sup>*</sup></label>
+              <div class="col-md-6" >
+              <%= p.input :fullname, label: false, :input_html => {placeholder: 'Ex.: Lucas Martins', :class => 'input-md' } %>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-md-3 control-label">CPF <sup>*</sup></label>
+              <div class="col-md-6">
+              <%= p.input :cpf, label: false, :input_html => { placeholder: 'Ex.: 00000000000', :maxlength => 11,  :class => 'input-md' } %>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-md-3 control-label">Telefone <sup>*</sup></label>
+              <div class="col-md-1" style="margin-right: 4px;">
+              <%= p.input :phonearea, label: false, :input_html => {placeholder: 'DDD', :maxlength => 2, :size => 2, :class => 'input-md' } %>
+              </div>
+
+              <div class="col-md-5">
+              <%= p.input :phone, label: false, :input_html => {placeholder: 'TELEFONE EX.: 000000000', :maxlength => 9, :size => 9, :class => 'input-md' } %>
+              </div>
+            </div>
+
+
+            <div class="form-group required">
+              <label class="col-md-3 control-label">CEP <sup>*</sup></label>
+              <div class="col-md-6">
+              <%= p.input :zipcode, label: false, :input_html => {placeholder: 'Ex.: 64056300', :type => "number", :class => 'input-md', :onBlur => "jsBuscaCep()" } %>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-md-3 control-label">Logadouro <sup>*</sup></label>
+              <div class="col-md-6">
+              <%= p.input :street, label: false, :input_html => { placeholder: 'Ex.: Rua America Norte', :class => 'input-md' } %>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-md-3 control-label">Bairro / Numero <sup>*</sup></label>
+              <div class="col-md-4" style="margin-right: 4px;">
+              <%= p.input :district, label: false, :input_html => { placeholder: 'Ex.: Jockey', :maxlength => 2, :size => 2, :class => 'input-md' } %>
+              </div>
+
+              <div class="col-md-2">
+              <%= p.input :number, label: false, :input_html => {placeholder: 'Ex.: 1010', :type => "number", :maxlength => 9, :size => 9, :class => 'input-md' } %>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-md-3 control-label">Cidade / Estado <sup>*</sup></label>
+              <div class="col-md-5" style="margin-right: 4px;">
+              <%= p.input :city, label: false, :input_html => {placeholder: 'Cidade', :maxlength => 2, :size => 2, :class => 'input-md' } %>
+              </div>
+
+              <div class="col-md-1">
+              <%= p.input :state, label: false, :input_html => {placeholder: 'UF', :maxlength => 9, :size => 9, :class => 'input-md' } %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="textarea"> Avatar </label>
+              <div class="col-md-6">
+                <div class="mb10">
+                  <%= p.input :avatar, label: false, :input_html => {id: 'input-upload-img1', "data-show-upload": "false", "data-show-caption": "true", "data-preview-file-type": "text", :class => 'file' } %>
+                  
+                </div>
+              </div>
+            </div>
+
+            <% end -%>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+            <% end %>
+
+            <div class="form-group required">
+            <label for="inputEmail3" class="col-md-3 control-label">Email<sup>*</sup></label>
+            <div class="col-md-6">
+            <%= f.input :email, required: true, label: false, :input_html => {placeholder: 'Digite seu Email', :class => 'input-md' }%>
+            </div>
+            </div>
+
+
+            <div class="form-group required">
+            <label for="inputPassword3" class="col-md-3 control-label">Senha </label>
+            <div class="col-md-6">
+            <%= f.input :password, label: false, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
+            </div>
+            </div>
+
+            <div class="form-group required">
+            <label for="inputPassword3" class="col-md-3 control-label">Confirme sua Senha </label>
+            <div class="col-md-6">
+            <%= f.input :password_confirmation, label: false, required: false %>
+            </div>
+            </div>
+
+            <div class="form-group required">
+            <label for="inputPassword3" class="col-md-3 control-label">Senha Atual </label>
+            <div class="col-md-6">
+            <%= f.input :current_password, label:false, hint: "we need your current password to confirm your changes", required: true %>
+            </div>
+            </div>
+
+            <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+            <%= f.button :submit, "Salvar Alterações", :class =>'btn-primary' %>
+            </div>
+            </div>
+
+           
+
+           
+            
+            <div class="form-actions">
+              
+            </div>
+          <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ </div>
+</div>
+
+
+

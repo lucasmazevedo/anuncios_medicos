@@ -1,0 +1,201 @@
+<div class="row">
+	<div class="col-sm-9 page-content col-thin-right">
+		<div class="inner inner-box ads-details-wrapper">
+			<h2> <%= @ad.title -%> <!--small class="label label-default adlistingtype">Company ad</small--></h2>
+			<span class="info-row">
+				<span class="date"><i class=" icon-clock"> </i>Publicado em: <%= @ad.created_at.to_s(:created_at) -%> - Atualizado em: <%= @ad.updated_at.to_s(:created_at) -%> </span>
+				<!-- <span class="category">Electronics </span>
+				<span class="item-location"><i class="fa fa-map-marker"></i> New York </span> -->
+			</span>
+		<div class="ads-image">
+			<% if @ad.price == 0 -%>
+            	<h1 class="pricetag"> Valor a combinar </h2>
+            <% else -%>        
+            	<h1 class="pricetag"> <%= number_to_currency(@ad.price, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %> </h2>
+            <% end -%>
+			
+			<% if @ad.images.blank? -%>
+				<%= link_to image_tag("http://placehold.it/700x400", :class => 'thumbnail no-margin'), ver_anuncio_path(@ad) %>
+            <% else -%>
+			<ul class="bxslider">
+				<% @ad.images.each do |photo| -%>
+	            	<li><%= image_tag photo.default %></li>
+	            <% end -%>
+			</ul>
+			<div id="bx-pager">
+				<% @ad.images.each_with_index do |photo, index| -%>
+					<%= link_to image_tag(photo.thumb), "", :class =>"thumb-item-link", "data-slide-index": index %>
+	            <% end -%>
+			</div>
+			<% end -%>
+		</div>
+
+	<div class="Ads-Details">
+		<h5 class="list-title"><strong>Detalhes do Produto</strong></h5>
+		<div class="row">
+			<div class="ads-details-info col-md-8">
+				<%= @ad.description.html_safe -%>
+			</div>
+		<div class="col-md-4">
+			<aside class="panel panel-body panel-details">
+				<ul>
+					<li><p class="no-margin"><strong>Condição:</strong> <%= @ad.state -%></p></li>
+					<li><p class=" no-margin "><strong>Categoria:</strong> <%= @ad.category.description-%></p></li>
+					<li><p class="no-margin"><strong>Localização:</strong> <%= "#{@ad.user.profile.city}/#{@ad.user.profile.state}" -%> </p></li>
+					<li><p class=" no-margin "><strong>Tags:</strong> <%= @ad.tags -%></p></li>
+					<li><p class="no-margin"><strong>Visualizações:</strong>  123</p></li>
+				</ul>
+			</aside>
+		<div class="ads-action">
+			<ul class="list-border">
+			<% if user_signed_in? -%>
+            	<%- unless current_user.favorite_ads.exists?(id: @ad.id) -%>
+                	<li><%= link_to '<i class="fa fa-heart"></i> Salvar Anúncio'.html_safe, favorite_ads_path(ad_id: @ad), method: :post %></li>
+            	<%- else -%>
+            		<li><%= link_to '<i class="fa fa-heart"></i> Anúncio Salvo'.html_safe, "javascript:void()", style: 'color:red' %></li>
+           		<%- end -%>
+           <% else -%>
+           		<li><%= link_to '<i class="fa fa-heart"></i> Salvar Anúncio'.html_safe, favorite_ads_path(ad_id: @ad), method: :post %></li>
+            <%- end -%>
+				<li><a href="#"> <i class="fa fa-share-alt"></i> Compartilhar Anúncio </a></li>
+				<li><a href="#reportAdvertiser" data-toggle="modal"> <i class="fa fa-warning"></i> Reportar Abuso </a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+			<div class="content-footer text-left">
+				<a class="btn  btn-primary" data-toggle="modal" href="#contactAdvertiser"><i class=" icon-mail-2"></i> Enviar Mensagem </a>
+				<a class="btn  btn-danger"><i class=" icon-phone-1"></i> <%= @ad.user.profile.fullphone -%> </a>
+			</div>
+		</div>
+	</div> 
+</div>
+ 
+<div class="col-sm-3  page-sidebar-right">
+	<aside>
+		<div class="panel sidebar-panel panel-contact-seller">
+			<div class="panel-heading">Informações do Vendedor</div>
+			<div class="panel-content user-info">
+				<div class="panel-body text-center">
+					<div class="seller-info">
+						<h3 class="no-margin"><%= @ad.user.profile.fullname -%></h3>
+						<p>Localização: <strong><%= @ad.user.profile.location -%></strong></p>
+						<p>Usuário Desde: <strong><%= I18n.l(@ad.user.created_at, format: :desde) -%></strong></p>
+					</div>
+					<div class="user-ads-action">
+						<a href="#contactAdvertiser" data-toggle="modal" class="btn   btn-primary btn-block"><i class=" icon-mail-2"></i> Enviar Mensagem</a>
+						<a class="btn  btn-danger btn-block"><i class=" icon-phone-1"></i> <%= @ad.user.profile.fullphone -%></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel sidebar-panel">
+			<div class="panel-heading">Dicas</div>
+			<div class="panel-content">
+				<div class="panel-body text-left">
+					<ul class="list-check">
+						<li> <i class="fa fa-check"></i> Sempre tire todas as suas dúvidas antes da compra</li>
+						<li> <i class="fa fa-check"></i> Leia sempre, TODO o anúncio</li>
+						<li> <i class="fa fa-check"></i> Procure por fotos reais do produto</li>
+						<li> <i class="fa fa-check"></i> Preço alto, não é garantia de um produto melhor</li>
+					</ul>
+					<!-- <p><a class="pull-right" href="#"> Know more <i class="fa fa-angle-double-right"></i> </a></p> -->
+				</div>
+			</div>
+		</div>
+	</aside>
+</div> 
+</div>
+
+<!--- # modals # -->
+
+<div class="modal fade" id="reportAdvertiser" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title"><i class="fa icon-info-circled-alt"></i> Há algo de errado com este anúncio ?
+			</h4>
+			</div>
+
+			<div class="modal-body">
+				<%= simple_form_for @message, url: reportads_path do |f| %>
+				<%= f.input :ads, as: :hidden, input_html: { value: @ad.id }  %>
+
+				<div class="form-group">
+					<label for="report-reason" class="control-label">Motivo:</label>
+					<% options = [
+						['Item Indisponivel'],
+						['Fraude'],
+						['Duplicado'],
+						['Spam'],
+						['Categoria Errada'],
+						['Ilegal'],
+						['Outro']
+						] -%>
+
+					<%= f.input :reason, collection: options, class: "form-control required", label: false, prompt: "Selecione um Motivo!" -%>
+				</div>
+
+				<div class="form-group">
+					<label for="name" class="control-label">Seu Nome:</label>
+					<%= f.input :name, placeholder: "Seu Nome", :id => 'name', :class => "form-control required", label: false %>
+				</div>
+
+				<div class="form-group">
+					<label for="sender-email" class="control-label">Seu E-mail:</label>
+					<%= f.input :email, placeholder: "seuemail@email.com", :class => "form-control email", :id => "sender-email", label: false %>
+				</div>
+
+				<div class="form-group">
+					<label for="message-text2" class="control-label">Mensagem <span class="text-count">(300) </span>:</label>
+					<%= f.input :content, placeholder: "Sua Mensagem aqui...", :class => "form-control",  :id => "message-text", label: false, as: :text%>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<%= f.submit "Enviar Mensagem", :class => "btn btn-success pull-right" %>
+			</div>
+			<% end -%>
+		</div>
+	</div>
+</div>
+ 
+ 
+<div class="modal fade" id="contactAdvertiser" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title"><i class=" icon-mail-2"></i>Enviar Mensagem</h4>
+			</div>
+			
+			<div class="modal-body">
+			<%= simple_form_for @message, url: messageads_path do |f| %>
+			<%= f.input :ads, as: :hidden, input_html: { value: @ad.id }  %>
+			<%= f.input :reason, as: :hidden, input_html: { value: 'none' } %>
+			
+				<div class="form-group">
+					<label for="name" class="control-label">Nome:</label>
+					 <%= f.input :name, placeholder: "Seu Nome", :id => 'name', :class => "form-control required", label: false %>
+				</div>
+	  
+	  			<div class="form-group">
+					<label for="sender-email" class="control-label">E-mail:</label>
+					<%= f.input :email, placeholder: "seuemail@email.com", :class => "form-control email", :id => "sender-email", label: false %>
+				</div>
+
+				<div class="form-group">
+					<label for="message-text" class="control-label">Mensagem <span class="text-count">(300) </span>:</label>
+					<%= f.input :content, placeholder: "Sua Mensagem aqui...", :class => "form-control",  :id => "message-text", label: false, as: :text%>
+				</div>   
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<%= f.submit "Enviar Mensagem", :class => "btn btn-success pull-right" %>
+			</div>
+		<% end %>
+		</div>
+	</div>
+</div>

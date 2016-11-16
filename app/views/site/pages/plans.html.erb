@@ -1,0 +1,55 @@
+<div class="section-content">
+<div class="row ">
+<h1 class="text-center title-1"> Nossos Planos</h1>
+<hr class="center-block small text-hr">
+
+</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 page-content">
+    <div class="inner-box">
+      <div class="row">
+
+<% plans = @plans.drop(1) -%>
+              <% plans.each do |plan| -%>
+              <div class="col-md-4">
+                <div class="pricing hover-effect">
+                  <div class="pricing-head">
+                    <h3><%= plan.name -%> <span>Cod. <%= plan.identifier -%> </span></h3>
+                    <h4>
+                    <%= number_to_currency(plan.amount, unit: "<i>R$</i>".html_safe, separator: ",<i>".html_safe, delimiter: ".", format: "%u %n</i>".html_safe) %>
+                    <span>Por Mês</span>
+                    </h4>
+                  </div>
+                  <ul class="pricing-content list-unstyled">
+                    <li>
+                      Públique até <%= plan.ads_qtd -%> Anúncios
+                    </li>
+                    <li>
+                      Até <%= plan.feature_qtd -%> Anúncios Premium
+                    </li>
+                    <li>
+                      Divulgação em Redes Sociais
+                    </li>
+                    <li>
+                      Email Marketing dos Anúncios
+                    </li>
+                    
+                  </ul>
+                  <div class="pricing-footer">
+                    <p>
+                       Ao assinar o plano, você concorda com os termos de uso do Anúncios Médicos
+                    </p><br>
+                    <%= link_to "Assinar", checkout_path(:plan => plan.id), class: "btn btn-primary" %>
+                    <!-- <a href="javascript:;" class="btn yellow-crusta">Assinar </a> -->
+                  </div>
+                </div>
+              </div>
+
+               
+              <% end -%>
+			</div>
+		</div>
+	</div>
+</div>

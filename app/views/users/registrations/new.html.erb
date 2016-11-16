@@ -1,0 +1,182 @@
+<div class="row">
+  <div class="col-md-8 page-content">
+  <div class="inner-box category-content">
+  <h2 class="title-2"><i class="icon-user-add"></i> Cadastre-se, é gratis! </h2>
+    <div class="row">
+      <div class="col-sm-12">
+
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {:class =>"form-horizontal"}) do |f| %>
+      <%= f.error_notification %>
+      <fieldset>
+           
+      <%= f.fields_for :profile do |p| %>
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">Nome Completo <sup>*</sup></label>
+        <div class="col-md-6" >
+        <%= p.input :fullname, label: false, :input_html => {placeholder: 'Ex.: Lucas Martins', :class => 'input-md' } %>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">CPF <sup>*</sup></label>
+        <div class="col-md-6">
+        <%= p.input :cpf, label: false, :input_html => { placeholder: 'Ex.: 00000000000', :maxlength => 11,  :class => 'input-md' } %>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">Telefone <sup>*</sup></label>
+        <div class="col-md-1" style="margin-right: 4px;">
+        <%= p.input :phonearea, label: false, :input_html => {placeholder: 'DDD', :maxlength => 2, :size => 2, :class => 'input-md' } %>
+        </div>
+
+        <div class="col-md-5">
+        <%= p.input :phone, label: false, :input_html => {placeholder: 'TELEFONE EX.: 000000000', :maxlength => 9, :size => 9, :class => 'input-md' } %>
+        </div>
+      </div>
+
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">CEP <sup>*</sup></label>
+        <div class="col-md-6">
+        <%= p.input :zipcode, label: false, :input_html => {placeholder: 'Ex.: 64056300', :type => "number", :class => 'input-md', :onBlur => "jsBuscaCep()" } %>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">Logadouro <sup>*</sup></label>
+        <div class="col-md-6">
+        <%= p.input :street, label: false, :input_html => { placeholder: 'Ex.: Rua America Norte', :class => 'input-md' } %>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">Bairro / Numero <sup>*</sup></label>
+        <div class="col-md-4" style="margin-right: 4px;">
+        <%= p.input :district, label: false, :input_html => { placeholder: 'Ex.: Jockey', :maxlength => 2, :size => 2, :class => 'input-md' } %>
+        </div>
+
+        <div class="col-md-2">
+        <%= p.input :number, label: false, :input_html => {placeholder: 'Ex.: 1010', :type => "number", :maxlength => 9, :size => 9, :class => 'input-md' } %>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-3 control-label">Cidade / Estado <sup>*</sup></label>
+        <div class="col-md-5" style="margin-right: 4px;">
+        <%= p.input :city, label: false, :input_html => {placeholder: 'Cidade', :maxlength => 2, :size => 2, :class => 'input-md' } %>
+        </div>
+
+        <div class="col-md-1">
+        <%= p.input :state, label: false, :input_html => {placeholder: 'UF', :maxlength => 9, :size => 9, :class => 'input-md' } %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="textarea"> Avatar </label>
+        <div class="col-md-6">
+          <div class="mb10">
+            <%= p.input :avatar, label: false, :input_html => {id: 'input-upload-img1', "data-show-upload": "false", "data-show-caption": "true", "data-preview-file-type": "text", :class => 'file' } %>
+            
+          </div>
+        </div>
+      </div>
+
+      <% end %>  
+
+      <div class="form-group required">
+      <label for="inputEmail3" class="col-md-3 control-label">Email<sup>*</sup></label>
+      <div class="col-md-6">
+      <%= f.input :email, required: true, label: false, :input_html => {placeholder: 'Digite seu Email', :class => 'input-md' }%>
+      </div>
+      </div>
+
+
+      <div class="form-group required">
+      <label for="inputPassword3" class="col-md-3 control-label">Senha </label>
+      <div class="col-md-6">
+      <%= f.input :password, label: false, required: true, hint: ("mínimo #{@minimum_password_length} caracteres" if @minimum_password_length) %>
+      </div>
+      </div>
+
+      <div class="form-group required">
+      <label for="inputPassword3" class="col-md-3 control-label">Confirme sua Senha </label>
+      <div class="col-md-6">
+      <%= f.input :password_confirmation, label: false, required: true %>
+      </div>
+      </div>
+
+      
+
+      <div class="form-group">
+      <label class="col-md-4 control-label"></label>
+        <div class="col-md-8">
+          <div class="termbox mb10">
+            <label class="checkbox-inline" for="checkboxes-1">
+            <input name="checkboxes" id="checkboxes-1" value="1" type="checkbox">
+            Eu li e concordo com os <a href="terms-conditions.html">Termos & Condições</a> </label>
+          </div>
+          <div style="clear:both"></div>
+          <%= f.button :submit, "Criar Conta", :class => 'btn-primary' %>
+        </div>
+      </fieldset>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-4 reg-sidebar">
+  <div class="text-center">
+    
+  </div>
+
+
+  <div class="reg-sidebar-inner text-center">
+
+    <%#= link_to "Já tenho Conta, entrar!", root_path, :class => 'btn btn-danger btn-block' %>  
+    
+    <div class="panel sidebar-panel">
+      <div class="panel-content">
+        <div class="panel-body text-center">
+
+          <div class="promo-text-box"><%= image_tag 'icons/001.png' -%>
+            <h3><strong>Crie Sua Conta!</strong></h3>
+            <p>Faça o login ou crie uma conta para ter acesso ao sistema!</p>
+          </div>
+
+          <div class="promo-text-box"><%= image_tag 'icons/002.png' -%>
+            <h3><strong>Informações do Produto</strong></h3>
+            <p> Insira as informações do produto que você quer vender!</p>
+          </div>
+
+          <div class="promo-text-box"><%= image_tag 'icons/003.png' -%>
+            <h3><strong>Venda, Negocie, Troque</strong></h3>
+            <p>Receba notificações, email de pessoas interessadas no seu produto!</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+</div>
+<script>
+  function jsBuscaCep() {
+    var cep = document.getElementById( "user_profile_attributes_zipcode" ).value;
+    $.getJSON("/busca_cep/" + cep,
+      function ( data ) {
+        //console.log(data);
+        $("#user_profile_attributes_street").val(data.tipo_logradouro + ' ' + data.logradouro);
+        $("#user_profile_attributes_district").val(data.bairro);
+        $("#user_profile_attributes_city").val(data.cidade);
+        $("#user_profile_attributes_state").val(data.uf);
+        $("#user_profile_attributes_number").focus();
+        $("#user_profile_attributes_number").scrollIntoView();
+      }
+    );
+  }
+</script>

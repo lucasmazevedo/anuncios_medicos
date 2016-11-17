@@ -36,9 +36,9 @@ puts "Cadastrando Planos"
 
 plans = [
    {name: "Plano Free", identifier: "free_plan", amount: 0, ads_qtd: 2, feature_qtd: 0, trial: 0, status: true},
-   {name: "Plano Bronze", identifier: "bronze_plan", amount: 1990, ads_qtd: 5, feature_qtd: 2, trial: 0, status: true},
-   {name: "Plano Prata", identifier: "silver_plan", amount: 2990, ads_qtd: 10, feature_qtd: 5, trial: 0, status: true},
-   {name: "Plano Ouro", identifier: "gold_plan", amount: 3990, ads_qtd: 30, feature_qtd: 15, trial: 0, status: true}
+   {name: "Plano Bronze", identifier: "bronze_plan", amount: 9.90, ads_qtd: 5, feature_qtd: 2, trial: 0, status: true},
+   {name: "Plano Prata", identifier: "silver_plan", amount: 19.90, ads_qtd: 10, feature_qtd: 5, trial: 0, status: true},
+   {name: "Plano Ouro", identifier: "gold_plan", amount: 29.90, ads_qtd: 30, feature_qtd: 15, trial: 0, status: true}
 ]
 
 

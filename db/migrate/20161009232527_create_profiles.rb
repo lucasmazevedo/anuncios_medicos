@@ -7,7 +7,7 @@ class CreateProfiles < ActiveRecord::Migration[5.0]
       t.string :phonearea, limit: 2
       t.string :phone, limit: 9
       t.date :birthdate
-      t.string :zipcode, limit: 7
+      t.string :zipcode, limit: 8
       t.string :street
       t.string :number
       t.string :district
